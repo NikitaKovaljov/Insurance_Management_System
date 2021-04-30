@@ -1,0 +1,308 @@
+@charset "utf-8";
+
+@media screen {
+    body {
+        background-color: #6b83cd;
+        background-size: auto;
+        background-repeat: no-repeat;
+        color: white;
+        background-attachment: scroll;
+        font-family: Monospace;
+        font-size: 15px;
+        margin: 0;
+    }
+
+    header {
+        height: 190px;
+        width: 100%;
+        background: url("../img/logo.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        text-align: left;
+    }
+    
+    nav {
+	    margin: 0 auto 0 auto;
+	    position: relative;
+	    width: 600px;
+	    top: 150px;
+    }
+	nav ul {
+		list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+		margin: 0;
+		background-color: #f5f5f5;
+		overflow: auto;
+		height: 40px;
+
+	}
+	nav ul > li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+		padding: 2px;
+		margin-right: 45px;
+		height: 20px;
+		background-color: #f3f3f3;
+	}
+	.menu a {
+		text-decoration: none;
+		color: #020202;
+	}
+	.menu a:hover {
+		text-decoration: none;
+        font-size: 16px;
+        border-bottom: 3px solid blue;
+		font-weight: bold;
+	}
+
+    h1, h2 {
+        color: rgba(7, 7, 7, 0.8);
+        	
+    }
+
+    h1 {
+        font-size: 37px;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 27px;
+    }
+
+    article {
+        padding-left: 20px;
+        margin-bottom: 40px;
+    }
+
+    hr {
+        border-top: 0.5px solid white;
+        margin-right: 20px;
+    }
+
+    footer {
+        background-color: black;
+        bottom: 0;
+        color: white;
+        font-size: 11px;
+        height: 25px;
+        line-height: 25px;
+        position: fixed;
+        text-align: right;
+        vertical-align: middle;
+        width: 100%;
+    }
+
+    footer p {
+        margin: 0 20px 0 0;
+    }
+
+    br {
+        display: block;
+        margin: 7px 0;
+     }
+
+    .image1 {
+        float: left;
+        border: 2px solid black;
+        margin-right: 20px;
+    }
+
+    .text {
+        color: white;
+        text-align: justify;
+        margin-right: 20px;
+    }
+
+    .text2 {
+        color: white;
+        text-align: justify;
+        margin: 65px 0;
+    }
+
+    .image2 {
+        float: right;
+        width: 180px; 
+        height: 220px;
+        border: 2px solid black;
+        margin: 50px 20px 45px 20px;
+
+    }
+
+    #loginForm {
+        max-width: 800px;
+        margin: auto;
+        margin-bottom: 40px;
+        padding: 10px;
+        color: black;
+        background: #c0c0c0;
+        width: 700px;
+    }
+    
+    .regfield {
+        width: 98%;
+        padding: 10px 0px 10px 15px;
+        margin: 0 0 10px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+      }
+
+    #services {
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        width: 700px;
+    }
+
+    .describe-service {
+        font-style: italic;
+    }
+
+    #services td, #services th {
+        border: 1px solid #ddd;
+        background-color: gray;
+        text-align: center;
+        padding: 12px;
+        width: 150px;
+   }
+
+    #services th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: center;
+        background-color: black;
+        color: white;
+   }
+   
+    .price::before {
+        content: 'From ';
+    }
+
+    .price::after {
+        content: '€/month';
+    }
+
+    .payment::after {
+        content: '€/month';
+    }
+    
+    .services-container {
+        display: block;
+        margin: auto auto 90px auto;
+        width: 700px;
+    }
+
+    button {
+        float: right;
+    }
+
+    .collapsible {
+        display: flex;
+        justify-content: center;
+        align-items: center;  
+        background-color: #555;
+        float:none;
+        color: white;
+        cursor: pointer;
+        padding: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        border: none;
+        font-size: 15px;
+    }
+    
+    .active, .collapsible:hover {
+      background-color: #333;
+    }
+
+    .collapsible::after {
+        content: "+";
+        padding-left: 8px; 
+    }
+
+    .active::after {
+        content: "-";
+        padding-left: 8px; 
+    }
+
+    .account_details {
+      padding: 15px;
+      display: none;
+      margin: 20px 20px 20px 0px;
+      overflow: hidden;
+      background-color: #777;
+    }
+
+    .current_data {
+        background-color: #555;
+        padding: 2px 15px 2px 15px;
+        margin-bottom: 20px;
+    }
+
+    .tooltip {
+        position: absolute;
+        display: block;
+        cursor: context-menu;
+        line-height: 1.42;
+        text-align: left;
+        text-align: start;
+        font-size: 13px;
+        filter: alpha(opacity=0);
+        opacity: 0;
+    }
+    
+    .tooltip.in {
+        filter: alpha(opacity=90);
+        opacity: .9;
+    }
+    
+    .tooltip.bottom {
+        padding: 5px 0;
+        margin-top: 3px;
+    }
+    
+    .tooltip.bottom .tooltip-arrow {
+        top: 0;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 0 5px 5px;
+        border-bottom-color: #000;
+    }
+    
+    .tooltip.bottom-left .tooltip-arrow {
+        top: 0;
+        right: 5px;
+        margin-top: -5px;
+        border-width: 0 5px 5px;
+        border-bottom-color: #000;
+    }
+    
+    .tooltip.bottom-right .tooltip-arrow {
+        top: 0;
+        left: 5px;
+        margin-top: -5px;
+        border-width: 0 5px 5px;
+        border-bottom-color: #000;
+    }
+    
+    .tooltip-inner {
+        max-width: 500px;
+        padding: 3px 8px;
+        color: #fff;
+        text-align: center;
+        background-color: #000;
+        border-radius: 4px;
+    }
+    
+    .tooltip-arrow {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+    }
+
+}
