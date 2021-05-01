@@ -126,13 +126,34 @@ function validateDetails() {
 }
 
 function validateCheckout() {
-    var plateTraffic = document.getElementById("plate_traffic").value;
-    var powerTraffic = document.getElementById("power_traffic").value;
-    var plateCasco = document.getElementById("plate_casco").value;
-    var powerCasco = document.getElementById("power_casco").value;
-    var age = document.getElementById("age").value;
-    var income = document.getElementById("income").value;
-    var area = document.getElementById("area").value;
+    var plateTraffic, powerTraffic, plateCasco, powerCasco, age, income, area;
+    if (document.getElementById("plate_traffic")) {
+        plateTraffic = document.getElementById("plate_traffic").value;
+        powerTraffic = document.getElementById("power_traffic").value;   
+    }
+    else {
+        plateTraffic = powerTraffic = "";
+    }
+    if (document.getElementById("plate_casco")) {
+        plateCasco = document.getElementById("plate_casco").value;
+        powerCasco = document.getElementById("power_casco").value;
+    }
+    else {
+        plateCasco = powerCasco = "";
+    }
+    if (document.getElementById("age")) {
+        age = document.getElementById("age").value;
+        income = document.getElementById("income").value;
+    }
+    else {
+        age = income = "";
+    }
+    if (document.getElementById("area")) {
+        area = document.getElementById("area").value;
+    }
+    else {
+        area = "";
+    }
 
     if (plateTraffic.length != 0 && plateTraffic.match(/^[0-9]{3}[A-Z]{3}$/) == null) {
         swal({ title: "Invalid input",   
