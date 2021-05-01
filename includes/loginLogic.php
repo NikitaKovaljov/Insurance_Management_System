@@ -133,7 +133,7 @@ if (isset($_POST["submit"])) {
                 $cookieHash = hash_hmac('sha256', $cookie, $secKey);
                 $cookie .= ':' . $cookieHash;
                 //Set cookie "rememberme" that consists of username, token and a hash of both
-                setcookie('rememberme', $cookie, time() + 7200);
+                setcookie('rememberme', $cookie, time() + 7200, "/");
                 //Write token to DB
                 $query = mysqli_prepare($mysqli, "UPDATE Project_Users SET Project_Users.token = '$token' WHERE username = BINARY ?;");
                 mysqli_stmt_bind_param($query, "s", $username);
