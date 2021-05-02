@@ -4,7 +4,7 @@
 <?php
 session_name("PHP-PART");
 session_start();
-include "../insurance_management_system/includes/functions.php";
+include "includes/functions.php";
 include_once "DB/connect.db.php";// variables with credentials for connection to db
 //If session does not exist, show a warning to login
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] == false) {
@@ -41,26 +41,26 @@ elseif (isset($_POST['submit'])) {
             </script>';
         die;
     }
-    $trafficSelected = false;
-    $cascoSelected = false;
-    $lifeSelected = false;
-    $homeSelected = false;
+    $traffic_selected = false;
+    $casco_selected = false;
+    $life_selected = false;
+    $home_selected = false;
     //Bind cookies to selected options to avoid problems with elements rendering
     if (isset($_POST['traffic'])) {
-        $trafficSelected = true;
-        setcookie("trafficSelected", $trafficSelected, ['samesite' => 'Strict']);
+        $traffic_selected = true;
+        setcookie("traffic_selected", $traffic_selected, ['samesite' => 'Strict']);
     }
     if (isset($_POST['casco'])) {
-        $cascoSelected = true;
-        setcookie("cascoSelected", $cascoSelected, ['samesite' => 'Strict']);
+        $casco_selected = true;
+        setcookie("casco_selected", $casco_selected, ['samesite' => 'Strict']);
     }
     if (isset($_POST['life'])) {
-        $lifeSelected = true;
-        setcookie("lifeSelected", $lifeSelected, ['samesite' => 'Strict']);
+        $life_selected = true;
+        setcookie("life_selected", $life_selected, ['samesite' => 'Strict']);
     }
     if (isset($_POST['home'])) {
-        $homeSelected = true;
-        setcookie("homeSelected", $homeSelected, ['samesite' => 'Strict']);
+        $home_selected = true;
+        setcookie("home_selected", $home_selected, ['samesite' => 'Strict']);
     }
 }
 
@@ -95,8 +95,8 @@ if (isset($_POST['submit_cart'])) {
             die;
         }
         else {
-            $dueTraffic = date("Y-m-d", strtotime("+12 month"));
-            $paymentTraffic = round($_POST['power_traffic'] * 0.4, 2);
+            $due_traffic = date("Y-m-d", strtotime("+12 month"));
+            $payment_traffic = round($_POST['power_traffic'] * 0.4, 2);
         }
     }
     if (!empty($_POST["plate_casco"])) {  
@@ -127,8 +127,8 @@ if (isset($_POST['submit_cart'])) {
             die;
         }
         else {
-            $dueCasco = date("Y-m-d", strtotime("+9 month"));
-            $paymentCasco = round($_POST['power_casco'] * 0.65, 2);
+            $due_casco = date("Y-m-d", strtotime("+9 month"));
+            $payment_casco = round($_POST['power_casco'] * 0.65, 2);
         }
     }
     if (!empty($_POST["age"])) {  
@@ -159,8 +159,8 @@ if (isset($_POST['submit_cart'])) {
             die;
         }
         else {
-            $dueLife = date("Y-m-d", strtotime("+12 month"));
-            $paymentLife = round($_POST['income'] * $_POST['age'] / 2000, 2);
+            $due_life = date("Y-m-d", strtotime("+12 month"));
+            $payment_life = round($_POST['income'] * $_POST['age'] / 2000, 2);
         }
     }
     if (!empty($_POST["area"])) {  
@@ -178,27 +178,27 @@ if (isset($_POST['submit_cart'])) {
             die;
         }
         else {
-            $dueHome = date("Y-m-d", strtotime("+6 month"));
-            $homeCoefficient = 0;
+            $due_home = date("Y-m-d", strtotime("+6 month"));
+            $home_coefficient = 0;
             if ($_POST["material"] == "stone_material") {
-                $homeCoefficient = 0.1;
+                $home_coefficient = 0.1;
             }
             elseif ($_POST["material"] == "mixed_material") {
-                $homeCoefficient = 0.12;
+                $home_coefficient = 0.12;
             }
             elseif ($_POST["material"] == "wood_material") {
-                $homeCoefficient = 0.15;
+                $home_coefficient = 0.15;
             }
-            $paymentHome = round($homeCoefficient * $_POST["area"], 2);
+            $payment_home = round($home_coefficient * $_POST["area"], 2);
         }
     }
     $username = $_SESSION['username'];
     //Check if a car with the given license plate already has traffic insurance
-    if (isset($dueTraffic)) {
-        $trafficCheck = mysqli_prepare($mysqli, "SELECT license_plate FROM Project_Service_Traffic WHERE license_plate = ?;");
-        mysqli_stmt_bind_param($trafficCheck, "s", $_POST['plate_traffic']);
-        mysqli_stmt_execute($trafficCheck);
-        if (mysqli_stmt_fetch($trafficCheck) == true) {
+    if (isset($due_traffic)) {
+        $traffic_check = mysqli_prepare($mysqli, "SELECT license_plate FROM Project_Service_Traffic WHERE license_plate = ?;");
+        mysqli_stmt_bind_param($traffic_check, "s", $_POST['plate_traffic']);
+        mysqli_stmt_execute($traffic_check);
+        if (mysqli_stmt_fetch($traffic_check) == true) {
             echo '<script>
                     $(document).ready(function(){
                         swal({ title: "Car is already insured",   
@@ -213,11 +213,11 @@ if (isset($_POST['submit_cart'])) {
         }
     }
     //Check if a car with the given license plate already has casco insurance
-    if (isset($dueCasco)) {   
-        $cascoCheck = mysqli_prepare($mysqli, "SELECT license_plate FROM Project_Service_Casco WHERE license_plate=?;");
-        mysqli_stmt_bind_param($cascoCheck, "s", $_POST['plate_casco']);
-        mysqli_stmt_execute($cascoCheck);
-        if (mysqli_stmt_fetch($cascoCheck) == true) {
+    if (isset($due_casco)) {   
+        $casco_check = mysqli_prepare($mysqli, "SELECT license_plate FROM Project_Service_Casco WHERE license_plate=?;");
+        mysqli_stmt_bind_param($casco_check, "s", $_POST['plate_casco']);
+        mysqli_stmt_execute($casco_check);
+        if (mysqli_stmt_fetch($casco_check) == true) {
             echo '<script>
                     $(document).ready(function(){
                         swal({ title: "Car is already insured",   
@@ -233,10 +233,10 @@ if (isset($_POST['submit_cart'])) {
         }
     }
     //Check if user already has life insurance
-    if (isset($dueLife)) {
+    if (isset($due_life)) {
         $query = "SELECT username FROM Project_Service_Life WHERE username = '$username';";
-        $lifeCheck = mysqli_query($mysqli, $query);
-        if(mysqli_num_rows($lifeCheck) > 0) {
+        $life_check = mysqli_query($mysqli, $query);
+        if(mysqli_num_rows($life_check) > 0) {
             echo '<script>
                     $(document).ready(function(){
                         swal({ title: "Your life is already insured",   
@@ -252,10 +252,10 @@ if (isset($_POST['submit_cart'])) {
         }
     }
     //Check if user already has home insurance
-    if (isset($dueHome)) {
+    if (isset($due_home)) {
         $query = "SELECT username FROM Project_Service_Home WHERE username = '$username';";
-        $homeCheck = mysqli_query($mysqli, $query);
-        if(mysqli_num_rows($homeCheck) > 0) {
+        $home_check = mysqli_query($mysqli, $query);
+        if(mysqli_num_rows($home_check) > 0) {
             echo '<script>
                     $(document).ready(function(){
                         swal({ title: "Your home is already insured",   
@@ -271,39 +271,38 @@ if (isset($_POST['submit_cart'])) {
         }
     }
     //Write all data to DB for a table to be rendered on accounts.php
-    if (isset($dueTraffic)) {
+    if (isset($due_traffic)) {
         $query = mysqli_prepare($mysqli, "INSERT INTO Project_Service_Traffic (username, valid_till, payment, license_plate, power) VALUES (?, ?, ?, ?, ?)");
-        mysqli_stmt_bind_param($query, "ssdsi", $_SESSION['username'], $dueTraffic, $paymentTraffic, $_POST["plate_traffic"], $_POST["power_traffic"]);
+        mysqli_stmt_bind_param($query, "ssdsi", $_SESSION['username'], $due_traffic, $payment_traffic, $_POST["plate_traffic"], $_POST["power_traffic"]);
         mysqli_stmt_execute($query);
     }
-    if (isset($dueCasco)) {
+    if (isset($due_casco)) {
         $query = mysqli_prepare($mysqli, "INSERT INTO Project_Service_Casco (username, valid_till, payment, license_plate, power) VALUES (?, ?, ?, ?, ?)");
-        mysqli_stmt_bind_param($query, "ssdsi", $_SESSION['username'], $dueCasco, $paymentCasco, $_POST["plate_casco"], $_POST["power_casco"]);
+        mysqli_stmt_bind_param($query, "ssdsi", $_SESSION['username'], $due_casco, $payment_casco, $_POST["plate_casco"], $_POST["power_casco"]);
         mysqli_stmt_execute($query);
     }
-    if (isset($dueLife)) {
+    if (isset($due_life)) {
         $query = mysqli_prepare($mysqli, "INSERT INTO Project_Service_Life (username, valid_till, payment, age, income) VALUES (?, ?, ?, ?, ?)");
-        mysqli_stmt_bind_param($query, "ssdid", $_SESSION['username'], $dueLife, $paymentLife, $_POST["age"], $_POST["income"]);
+        mysqli_stmt_bind_param($query, "ssdid", $_SESSION['username'], $due_life, $payment_life, $_POST["age"], $_POST["income"]);
         mysqli_stmt_execute($query);
     }
-    if (isset($dueHome)) {
+    if (isset($due_home)) {
         $query = mysqli_prepare($mysqli, "INSERT INTO Project_Service_Home (username, valid_till, payment, area, material) VALUES (?, ?, ?, ?, ?)");
-        mysqli_stmt_bind_param($query, "ssdis", $_SESSION['username'], $dueHome, $paymentHome, $_POST["area"], $_POST["material"]);
+        mysqli_stmt_bind_param($query, "ssdis", $_SESSION['username'], $due_home, $payment_home, $_POST["area"], $_POST["material"]);
         mysqli_stmt_execute($query);
     }
     //When data is successfully written, go to account.php, delete cookies for services selection
     mysqli_close($mysqli);
     header("Location: account.php");
-    setcookie("trafficSelected", "", time()-3600);
-    $trafficSelected = false;
-    setcookie("cascoSelected", "", time()-3600);
-    $cascoSelected = false;
-    setcookie("lifeSelected", "", time()-3600);
-    $lifeSelected = false;
-    setcookie("homeSelected", "", time()-3600);
-    $homeSelected = false;
+    setcookie("traffic_selected", "", time()-3600);
+    $traffic_selected = false;
+    setcookie("casco_selected", "", time()-3600);
+    $casco_selected = false;
+    setcookie("life_selected", "", time()-3600);
+    $life_selected = false;
+    setcookie("home_selected", "", time()-3600);
+    $home_selected = false;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -321,31 +320,31 @@ if (isset($_POST['submit_cart'])) {
         <div>
             <article>
                 <h1>Checkout</h1>
-                <form onsubmit="return validateCheckout()" method="POST">
+                <form onsubmit="return validate_checkout()" method="POST">
                 <?php
                 //Render services buy options based on selected options
-                if ($_COOKIE['trafficSelected'] == true || $trafficSelected == true) {
+                if ($_COOKIE['traffic_selected'] == true || $traffic_selected == true) {
                     echo '<h2>Traffic insurance</h2>
                     <label for="plate_traffic">Your vehicle license plate</label> 
                     <input type="text" placeholder="123ABC" id="plate_traffic" name="plate_traffic" pattern="[0-9]{3}[A-Z]{3}" required><br>
                     <label for="power_traffic">Your vehicle power(in kW)</label> 
                     <input type="number" id="power_traffic" name="power_traffic" min="40" max="999" required><br>';
                 }
-                if ($_COOKIE['cascoSelected'] == true || $cascoSelected == true) {
+                if ($_COOKIE['casco_selected'] == true || $casco_selected == true) {
                     echo '<h2>Casco insurance</h2>
                     <label for="plate_casco">Your vehicle license plate</label> 
                     <input type="text" placeholder="123ABC" id="plate_casco" name="plate_casco" pattern="[0-9]{3}[A-Z]{3}" required><br>
                     <label for="power_casco">Your vehicle power(in kW)</label> 
                     <input type="number" id="power_casco" name="power_casco" min="40" max="999" required><br>';
                 }
-                if ($_COOKIE['lifeSelected'] == true || $lifeSelected == true) {
+                if ($_COOKIE['life_selected'] == true || $life_selected == true) {
                     echo '<h2>Life insurance</h2>
                     <label for="age">Your full age</label> 
                     <input type="number" id="age" name="age" min="18" max="120" required><br>
                     <label for="income">Your monthly income(in €)</label> 
                     <input type="number" id="income" name="income" min="0" required><br>';
                 }
-                if ($_COOKIE['homeSelected'] == true || $homeSelected == true) {
+                if ($_COOKIE['home_selected'] == true || $home_selected == true) {
                     echo '<h2>Home insurance</h2>
                     <label for="area">Your home total area size(in ㎡)</label> 
                     <input type="number" id="area" name="area" min="1" max="999" required><br>
