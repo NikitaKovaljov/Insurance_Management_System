@@ -20,9 +20,9 @@ if (!$mysqli) {
 $username = $_SESSION['username'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["newPassSubmit"])) {
+    if (isset($_POST["new_pass_submit"])) {
         //Validate new password if user pressed the corresponding button on account.php
-        if (empty($_POST['newPass'])) {
+        if (empty($_POST['new_pass'])) {
             echo '<script>
                     $(document).ready(function(){
                         swal({ title: "Password is empty!",   
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die;
         }
         else {
-            if (preg_match("/^[0-9A-Za-z@#\-_$%^&+=!\?]{8,}$/",$_POST['newPass']) != 1) {
+            if (preg_match("/^[0-9A-Za-z@#\-_$%^&+=!\?]{8,}$/",$_POST['new_pass']) != 1) {
                 echo '<script>
                         $(document).ready(function(){
                             swal({ title: "Password is not valid!",   
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } 
             else {
                 //Write new password to DB
-                $password = filter_var($_POST['newPass'], FILTER_SANITIZE_SPECIAL_CHARS);
+                $password = filter_var($_POST['new_pass'], FILTER_SANITIZE_SPECIAL_CHARS);
                 $password = password_hash($password, PASSWORD_DEFAULT);
                 $query = mysqli_prepare($mysqli, "UPDATE Project_Users SET user_pass=? WHERE username='$username';");
                 mysqli_stmt_bind_param($query, "s", $password);
@@ -63,8 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } 
     }
     //Validate new email if user pressed the corresponding button on account.php
-    elseif (isset($_POST["newEmailSubmit"])) {
-        if (empty($_POST['newEmail'])) {
+    elseif (isset($_POST["new_email_submit"])) {
+        if (empty($_POST['new_email'])) {
             echo '<script>
                     $(document).ready(function(){
                         swal({ title: "Email is empty!",   
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die;
         }
         else {
-            if(filter_var($_POST["newEmail"], FILTER_VALIDATE_EMAIL) == false) {
+            if(filter_var($_POST["new_email"], FILTER_VALIDATE_EMAIL) == false) {
                 echo '<script>
                         $(document).ready(function(){
                             swal({ title: "Email is not valid!",   
@@ -92,8 +92,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 die;
             } 
             else {
+                $email = clean_email($mysqli, $_POST["new_email"]);
+                //Check for email duplicates
+                $email_check = mysqli_prepare($mysqli, "SELECT email FROM Project_Users WHERE email=?");
+                mysqli_stmt_bind_param($email_check, "s", $email);
+                mysqli_stmt_execute($email_check);
+                mysqli_stmt_bind_result($email_check, $check_email_result);
+                while (mysqli_stmt_fetch($email_check)) {
+                    if (strtolower($check_email_result) === strtolower($email)) {
+                        echo '<script>
+                                $(document).ready(function(){
+                                    swal({ title: "Email is taken!",   
+                                        text: "This email is already taken by another user",   
+                                        icon: "warning",     
+                                        button: "OK"}).then(function(){
+                                            window.location.href = "../account.php";
+                                        })
+                                    });
+                            </script>';
+                        mysqli_stmt_close($email_check);
+                        mysqli_close($mysqli);
+                        die;                    
+                    }
+                }
                 //Write new email to DB
-                $email = clean_email($mysqli, $_POST["newEmail"]);
                 $query = mysqli_prepare($mysqli, "UPDATE Project_Users SET email=? WHERE username='$username';");
                 mysqli_stmt_bind_param($query, "s", $email);
                 mysqli_stmt_execute($query);
@@ -104,8 +126,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }         
     }
     //Validate new phone number if user pressed the corresponding button on account.php
-    elseif (isset($_POST["newNumberSubmit"])) {
-        if (empty($_POST['newNumber'])) {
+    elseif (isset($_POST["new_number_submit"])) {
+        if (empty($_POST['new_number'])) {
             echo '<script>
                     $(document).ready(function(){
                         swal({ title: "Phone number is empty!",   
@@ -119,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die;
         }
         else {
-            if (preg_match("/^[0-9+-]{1,7}[0-9]{6,9}$/", $_POST["newNumber"]) != 1) {  
+            if (preg_match("/^[0-9+-]{1,7}[0-9]{6,9}$/", $_POST["new_number"]) != 1) {  
                 echo '<script>
                         $(document).ready(function(){
                             swal({ title: "Phone number is not valid!",   
@@ -133,8 +155,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 die;
             } 
             else {
+                $pnumber = clean_integer($mysqli, $_POST["new_number"]);
+                //Check for phone number duplicates
+                $pnumber_check = mysqli_prepare($mysqli, "SELECT phone_number FROM Project_Users WHERE phone_number=?");
+                mysqli_stmt_bind_param($pnumber_check, "s", $pnumber);
+                mysqli_stmt_execute($pnumber_check);
+                mysqli_stmt_bind_result($pnumber_check, $check_pnumber_result);
+                while (mysqli_stmt_fetch($pnumber_check)) {
+                    if ($check_pnumber_result === $pnumber) {
+                        echo '<script>
+                                $(document).ready(function(){
+                                    swal({ title: "Phone number is taken!",   
+                                        text: "This phone number is already taken by another user",   
+                                        icon: "warning",     
+                                        button: "OK"}).then(function(){
+                                            window.location.href = "../account.php";
+                                        })
+                                    });
+                            </script>';
+                        mysqli_stmt_close($pnumber_check);
+                        mysqli_close($mysqli);
+                        die;                    
+                    }
+                }
                 //Write new phone number to DB
-                $pnumber = clean_integer($mysqli, $_POST["newNumber"]);
                 $query = mysqli_prepare($mysqli, "UPDATE Project_Users SET phone_number=? WHERE username='$username';");
                 mysqli_stmt_bind_param($query, "s", $pnumber);
                 mysqli_stmt_execute($query);
