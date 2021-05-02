@@ -124,14 +124,14 @@ if (isset($_POST["submit"])) {
             die; 
         }
 
-        if(password_verify($password, $pass) == true){    
+        if(password_verify($password, $pass) == true) {    
             //Generate token for remember me if the checkbox is ticked
-            if(isset($_POST['rememberMe'])) {
+            if(isset($_POST['remember_me'])) {
                 $token = bin2hex(random_bytes(16));
                 $cookie = $username . ':' . $token;
-                $secKey = 'Zk*nxeL1Oh1I$6i';
-                $cookieHash = hash_hmac('sha256', $cookie, $secKey);
-                $cookie .= ':' . $cookieHash;
+                $sec_key = 'Zk*nxeL1Oh1I$6i';
+                $cookie_hash = hash_hmac('sha256', $cookie, $sec_key);
+                $cookie .= ':' . $cookie_hash;
                 //Set cookie "rememberme" that consists of username, token and a hash of both
                 setcookie('rememberme', $cookie, time() + 7200, "/");
                 //Write token to DB
@@ -144,7 +144,8 @@ if (isset($_POST["submit"])) {
                 $_SESSION['username'] = $username;
                 header("Location: ../account.php");
                 die;
-        }else{
+        }
+        else {
             echo '<script>
                     $(document).ready(function(){
                         swal({ title: "Invalid password",   
