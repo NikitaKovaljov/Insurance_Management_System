@@ -5,7 +5,7 @@
 session_name("PHP-PART");
 session_start();
 // connection to mysql database
-include "../insurance_management_system/includes/functions.php";
+include "includes/functions.php";
 include_once "DB/connect.db.php";// variables with credentials for connection to db
 
 // checking method, if loggedin is set and equal true
@@ -64,13 +64,13 @@ elseif (isset($_COOKIE['rememberme'])) {
         <div>
             <article>
                 <h1>Login</h1>
-                <form onsubmit="return validateLogin()" action = "includes/loginLogic.php" method = "POST" id="loginForm">
+                <form onsubmit="return validate_login()" action = "includes/login_logic.php" method = "POST" id="login_form">
                     <label for="username">Username:</label><br>
                     <input type="text" id="username" name="username" class= "regfield" minlength="5" placeholder="Enter your username (minimum length is 5 characters)" required><br>
                     <label for="pwd">Password:</label><br>
                     <input type="password" id="pwd" name="pwd" class="regfield" minlength="8" placeholder="Enter your password (minimum length is 8 characters)" required><br>
-                    <input type="checkbox" id="rememberMe" name="rememberMe" value="Remember me">
-                    <label for="rememberMe">Remember me</label>
+                    <input type="checkbox" id="remember_me" name="remember_me" value="Remember me">
+                    <label for="remember_me">Remember me</label>
                     <br>
                     <input type="submit" name = "submit" id = "submit" value="Login">
                 </form>
