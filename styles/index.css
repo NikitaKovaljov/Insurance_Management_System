@@ -132,7 +132,7 @@
 
     }
 
-    #loginForm {
+    #login_form {
         max-width: 800px;
         margin: auto;
         margin-bottom: 40px;
@@ -228,7 +228,7 @@
         padding-left: 8px; 
     }
 
-    .account_details {
+    .account-details {
       padding: 15px;
       display: none;
       margin: 20px 20px 20px 0px;
@@ -236,7 +236,7 @@
       background-color: #777;
     }
 
-    .current_data {
+    .current-data {
         background-color: #555;
         padding: 2px 15px 2px 15px;
         margin-bottom: 20px;
