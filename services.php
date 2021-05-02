@@ -5,12 +5,12 @@
 session_name("PHP-PART");
 session_start();
 //Delete cookies connected to chosen services options
-setcookie("trafficSelected", "", time()-3600);
-setcookie("cascoSelected", "", time()-3600);
-setcookie("lifeSelected", "", time()-3600);
-setcookie("homeSelected", "", time()-3600);
+setcookie("traffic_selected", "", time()-3600);
+setcookie("casco_selected", "", time()-3600);
+setcookie("life_selected", "", time()-3600);
+setcookie("home_selected", "", time()-3600);
 
-include "../insurance_management_system/includes/functions.php";
+include "includes/functions.php";
 include_once "DB/connect.db.php"; // credentials for connection to db 
 
 //Check for "remember me" cookie
@@ -31,12 +31,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     $username = $_SESSION['username'];
     //Check if user already has life insurance
     $query = "SELECT username FROM Project_Service_Life WHERE username = '$username';";
-    $lifeCheck = mysqli_query($mysqli, $query);
-    $lifeRows = mysqli_num_rows($lifeCheck);
+    $life_check = mysqli_query($mysqli, $query);
+    $life_rows = mysqli_num_rows($life_check);
     //Check if user already has home insurance
     $query = "SELECT username FROM Project_Service_Home WHERE username = '$username';";
-    $homeCheck = mysqli_query($mysqli, $query);
-    $homeRows = mysqli_num_rows($homeCheck);
+    $home_check = mysqli_query($mysqli, $query);
+    $home_rows = mysqli_num_rows($home_check);
 }
 
 ?>
@@ -103,7 +103,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                             <td class="price">4</td>
 							<?php
                             //If life is already insured, show tooltip
-							if ($lifeRows > 0) {
+							if ($life_rows > 0) {
                                 echo '<td><input data-toggle="tooltip" data-placement="bottom" title="You already have your life insured" type="checkbox" id="life" name="life" disabled></td>';
 							}
                             elseif (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
@@ -120,7 +120,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                             <td class="price">13</td>
 							<?php
                             //If home is already insured, show tooltip
-							if ($homeRows > 0) {
+							if ($home_rows > 0) {
                                 echo '<td><input data-toggle="tooltip" data-placement="bottom" title="Your home is already insured" type="checkbox" id="home" name="home" disabled></td>';
 							}
                             elseif (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
