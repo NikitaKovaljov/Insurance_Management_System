@@ -6,7 +6,7 @@
 session_name("PHP-PART");
 session_start();
 
-include "../insurance_management_system/includes/functions.php";
+include "includes/functions.php";
 include_once "DB/connect.db.php";// variables with credentials for connection to db
 
 //Check for "remember me" cookie
