@@ -4,9 +4,9 @@ var i;
 for (i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function() {
         //Clear input fields on button click
-        document.getElementById("newPass").value = "";
-        document.getElementById("newEmail").value = "";
-        document.getElementById("newNumber").value = "";
+        document.getElementById("new_pass").value = "";
+        document.getElementById("new_email").value = "";
+        document.getElementById("new_number").value = "";
         //Display next button sibling if button clicked, hide if clicked again
         this.classList.toggle("active");
         var content = this.nextElementSibling;
@@ -19,7 +19,7 @@ for (i = 0; i < coll.length; i++) {
     });
 }  
 
-function validateRegistration() {
+function validate_registration() {
     var username = document.getElementById("username").value;
     var pwd = document.getElementById("pwd").value;
     var fname = document.getElementById("fname").value;
@@ -71,7 +71,7 @@ function validateRegistration() {
     }
 }
 
-function validateLogin() {
+function validate_login() {
     var username = document.getElementById("username").value;
     var pwd = document.getElementById("pwd").value;
     if (username.match(/^\w{5,}$/) == null) {
@@ -90,33 +90,33 @@ function validateLogin() {
     }
 }
 
-function validateDetails() {
-    var newPass = document.getElementById("newPass").value;
-    var newEmail = document.getElementById("newEmail").value;
-    var newNumber = document.getElementById("newNumber").value;
+function validate_details() {
+    var new_pass = document.getElementById("new_pass").value;
+    var new_email = document.getElementById("new_email").value;
+    var new_number = document.getElementById("new_number").value;
 
-    if ((newPass.length != 0 && newEmail.length != 0 && newNumber.length != 0) || (newPass.length != 0 && newEmail.length != 0) || (newEmail.length != 0 && newNumber.length != 0) || (newPass.length != 0 && newNumber.length != 0)) {
+    if ((new_pass.length != 0 && new_email.length != 0 && new_number.length != 0) || (new_pass.length != 0 && new_email.length != 0) || (new_email.length != 0 && new_number.length != 0) || (new_pass.length != 0 && new_number.length != 0)) {
             swal({ title: "More than one detail chosen",   
             text: "You can only change one account detail at a time",   
             icon: "error",
             button: "OK"});
         return false;  
     }
-    else if (newPass.length != 0 && newPass.match(/^[0-9A-Za-z@#\-_$%^&+=!\?]{8,}$/) == null) {
+    else if (new_pass.length != 0 && new_pass.match(/^[0-9A-Za-z@#\-_$%^&+=!\?]{8,}$/) == null) {
         swal({ title: "Invalid input",   
             text: "Your password is invalid",   
             icon: "error",
             button: "OK"});
         return false;
     }
-    else if (newEmail.length != 0 && newEmail.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/) == null) {
+    else if (new_email.length != 0 && new_email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/) == null) {
         swal({ title: "Invalid input",   
             text: "Your email is invalid",   
             icon: "error",
             button: "OK"});
         return false;
     }
-    else if (newNumber.length != 0 && newNumber.match(/^[0-9+-]{1,7}[0-9]{6,9}$/) == null) {
+    else if (new_number.length != 0 && new_number.match(/^[0-9+-]{1,7}[0-9]{6,9}$/) == null) {
         swal({ title: "Invalid input",   
             text: "Your phone number is invalid",   
             icon: "error",
@@ -125,21 +125,21 @@ function validateDetails() {
     }
 }
 
-function validateCheckout() {
-    var plateTraffic, powerTraffic, plateCasco, powerCasco, age, income, area;
+function validate_checkout() {
+    var plate_traffic, power_traffic, plate_casco, power_casco, age, income, area;
     if (document.getElementById("plate_traffic")) {
-        plateTraffic = document.getElementById("plate_traffic").value;
-        powerTraffic = document.getElementById("power_traffic").value;   
+        plate_traffic = document.getElementById("plate_traffic").value;
+        power_traffic = document.getElementById("power_traffic").value;   
     }
     else {
-        plateTraffic = powerTraffic = "";
+        plate_traffic = power_traffic = "";
     }
     if (document.getElementById("plate_casco")) {
-        plateCasco = document.getElementById("plate_casco").value;
-        powerCasco = document.getElementById("power_casco").value;
+        plate_casco = document.getElementById("plate_casco").value;
+        power_casco = document.getElementById("power_casco").value;
     }
     else {
-        plateCasco = powerCasco = "";
+        plate_casco = power_casco = "";
     }
     if (document.getElementById("age")) {
         age = document.getElementById("age").value;
@@ -155,28 +155,28 @@ function validateCheckout() {
         area = "";
     }
 
-    if (plateTraffic.length != 0 && plateTraffic.match(/^[0-9]{3}[A-Z]{3}$/) == null) {
+    if (plate_traffic.length != 0 && plate_traffic.match(/^[0-9]{3}[A-Z]{3}$/) == null) {
         swal({ title: "Invalid input",   
             text: "License plate for traffic insurance is invalid",   
             icon: "error",
             button: "OK"});
         return false;  
     }
-    else if (powerTraffic.length != 0 && (powerTraffic.match(/^[0-9]{1,3}$/) == null || powerTraffic < 40)) {
+    else if (power_traffic.length != 0 && (power_traffic.match(/^[0-9]{1,3}$/) == null || power_traffic < 40)) {
         swal({ title: "Invalid input",   
             text: "Power for traffic insurance is invalid",   
             icon: "error",
             button: "OK"});
         return false;  
     }
-    else if (plateCasco.length != 0 && plateCasco.match(/^[0-9]{3}[A-Z]{3}$/) == null) {
+    else if (plate_casco.length != 0 && plate_casco.match(/^[0-9]{3}[A-Z]{3}$/) == null) {
         swal({ title: "Invalid input",   
             text: "License plate for casco insurance is invalid",   
             icon: "error",
             button: "OK"});
         return false;  
     }
-    else if (powerCasco.length != 0 && (powerCasco.match(/^[0-9]{1,3}$/) == null || powerTraffic < 40)) {
+    else if (power_casco.length != 0 && (power_casco.match(/^[0-9]{1,3}$/) == null || power_traffic < 40)) {
         swal({ title: "Invalid input",   
             text: "Power for casco insurance is invalid",   
             icon: "error",
