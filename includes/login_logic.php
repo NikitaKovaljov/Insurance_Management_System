@@ -1,6 +1,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<script src="../scripts/script.js"></script>
+
 <?php
 // session name, and session start
 session_name("PHP-PART");
@@ -33,30 +35,12 @@ if (isset($_POST["submit"])) {
         }
         else {
             if (empty($_POST['username'])) {
-                echo '<script>
-                    $(document).ready(function(){
-                        swal({ title: "Empty Username!",   
-                            text: "Look precisely to input value",   
-                            icon: "error",      
-                            button: "OK"}).then(function(){
-                                window.location.href = "../login.php";
-                            })
-                        });
-                    </script>';
+                echo '<script src = ../scripts/script.js>validate_login();</script>';
                 die;
             }
             else {
                 if (preg_match("/^\w{5,}$/",$_POST['username']) != 1) {
-                    echo '<script>
-                        $(document).ready(function(){
-                            swal({ title: "Username input is not valid!",   
-                                text: "Look precisely to input value",   
-                                icon: "error",   
-                                button: "OK"}).then(function(){
-                                    window.location.href = "../login.php";
-                                })
-                            });
-                        </script>';
+                    echo '<script src = ../scripts/script.js>validate_login();</script>';
                     die;
                 } 
                 else {
@@ -64,30 +48,12 @@ if (isset($_POST["submit"])) {
                 }
             }
             if (empty($_POST['pwd'])) {
-                echo '<script>
-                        $(document).ready(function(){
-                            swal({ title: "Password is empty!",   
-                                text: "Look precisely to input value",   
-                                icon: "error",     
-                                button: "OK"}).then(function(){
-                                    window.location.href = "../login.php";
-                                })
-                            });
-                    </script>';
+                echo '<script src = ../scripts/script.js>validate_login();</script>';
                 die;
             }
             else {
                 if (preg_match("/^[0-9A-Za-z@#\-_$%^&+=!\?]{8,}$/",$_POST['pwd']) != 1) {
-                    echo '<script>
-                            $(document).ready(function(){
-                                swal({ title: "Password input is not valid!",   
-                                    text: "Look precisely to input value",   
-                                    icon: "error",      
-                                    button: "OK"}).then(function(){
-                                        window.location.href = "../login.php";
-                                })
-                            });
-                        </script>';
+                    echo '<script src = ../scripts/script.js>validate_login();</script>';
                     die;
                 } 
                 else {
