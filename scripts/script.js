@@ -77,18 +77,37 @@ function validate_registration() {
     }
 }
 //Function to validate all login input
+
 function validate_login() {
     //Read values of input fields
     var username = document.getElementById("username").value;
     var pwd = document.getElementById("pwd").value;
     //Validate username
-    if (username.match(/^\w{5,}$/) == null) {
+
+    if(username.length === 0 || username === ""){
+        swal({ title: "Username is empty",   
+            text: "Your username is empty",   
+            icon: "error",
+            button: "OK"});
+        return false;
+    }
+    
+    else if (username.match(/^\w{5,}$/) == null) {
         swal({ title: "Invalid input",   
             text: "Your username is invalid",   
             icon: "error",
             button: "OK"});
         return false;
     }
+
+    else if (pwd.length === 0 || pwd === ""){
+        swal({ title: "password is empty",   
+            text: "Your password is empty",   
+            icon: "error",
+            button: "OK"});
+        return false;
+    }
+    
     //Validate password
     else if (pwd.match(/^[0-9A-Za-z@#\-_$%^&+=!\?]{8,}$/) == null) {
         swal({ title: "Invalid input",   
@@ -98,6 +117,7 @@ function validate_login() {
         return false;
     }
 }
+
 //Function to validate account details input
 function validate_details() {
     //Read values of input fields
@@ -227,3 +247,4 @@ function validate_checkout() {
         return false;  
     }
 }
+
