@@ -2,7 +2,6 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script src="../scripts/script.js"></script>
-
 <?php
 // session name, and session start
 session_name("PHP-PART");
