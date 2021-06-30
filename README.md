@@ -1,5 +1,5 @@
 # (Insurance Management System)
-## Nikita Kovaljov (nikit.kovaljov@gmail.com)
+## Nikita Kovaljov (nikita.kovaljov@gmail.com)
 
 ---
 ### Milestone 1 responsibilities:
